@@ -8,15 +8,15 @@ USER app
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG configuration=Release
 WORKDIR "/src"
-COPY ["./src.csproj", "src/"]
-RUN dotnet restore "./src.csproj"
+COPY ["src/src.csproj", "src/"]
+RUN dotnet restore "src/src.csproj"
 COPY . .
-WORKDIR "/src"
-RUN dotnet build "./src.csproj" -c $configuration -o /app/build
+WORKDIR "/src/src"
+RUN dotnet build "src.csproj" -c $configuration -o /app/build
 
 FROM build AS publish
 ARG configuration=Release
-RUN dotnet publish "./src.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "src.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

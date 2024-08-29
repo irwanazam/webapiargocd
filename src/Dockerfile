@@ -7,9 +7,9 @@ ENV ASPNETCORE_URLS=http://+:5198
 USER app
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG configuration=Release
-WORKDIR /src
-COPY ["./src.csproj", "src/"]
-RUN dotnet restore "./src.csproj"
+WORKDIR "/src"
+COPY ["src.csproj", "src/"]
+RUN dotnet restore "src.csproj"
 COPY . .
 WORKDIR "/src"
 RUN dotnet build "src.csproj" -c $configuration -o /app/build
